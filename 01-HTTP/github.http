@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 GET https://api.github.com/users/vakanbi971
+=======
+GET https://api.github.com/users/aarias011
+>>>>>>> master
 content-type: application/json
