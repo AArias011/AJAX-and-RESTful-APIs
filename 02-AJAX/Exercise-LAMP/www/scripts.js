@@ -12,6 +12,19 @@
 // global variables
 var selectedCity = "Tucson, AZ";
 var weatherReport;
+var httpRequest = false;
+
+function getRequestObject() {
+   alert("getRequestObject()");
+   try {
+      httpRequest = new XMLHttpRequest();
+   } catch (requestError) {
+      console.log(`Our error: ${requestError}`);
+      return false;
+   }
+   return httpRequest;
+}
+
 
 function getWeather(evt) {
    var latitude;
@@ -32,6 +45,19 @@ function getWeather(evt) {
    } else if (selectedCity === "Montreal, QC") {
       latitude = 45.5601062;
       longitude = -73.7120832;
+   }
+
+   if (!httpRequest) httpRequest = getRequestObject();
+
+   httpRequest.abort();
+   httpRequest.open("get", "solar.php?" + "lat=" + latitude + "&lng" + longitude, true);
+   httpRequest.send(null);
+
+   httpRequest.onreadystatechange = fillWeather;w
+}
+function fillWeather() {
+   if (httpRequest.readyState === 4 && httpRequest.status === 200) {
+      weatherReport = JSON.parse(httpRequest.responseText);
    }
 }
 
